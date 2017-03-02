@@ -7,8 +7,8 @@
 #### PREREQUISITES:
 
 1. Make sure JDK 8 or higher is installed.
-2. The same for apache maven 3. 
-3. Install a PostgreSQL database (use 'postgres' as default db owner username and '12345678' as default db owner password)
+2. The same for apache [Maven](https://maven.apache.org/) version 3.3.1 or higher. 
+3. Install a [PostgreSQL](https://www.postgresql.org/) database (use 'postgres' as default db owner username and '12345678' as default db owner password)
 
 
 #### PRE-BUILD STEPS:
@@ -29,16 +29,24 @@ HINT: make sure your project folder doesn't contain spaces
 #### BUILD:
 
 1. Run "mvn clean install"
-    a. Run "mvn clean install -pl !book-integration-tests" to skip integration tests
-    b. Run "mvn test -pl book-integration-tests" to execute only integration tests
-    c. Run "mvn clean install -DskipTests" to build without an execution of unit tests (NOT RECOMMENDED!)
-
+    - Run to skip integration tests.
+      ```shell
+      mvn clean install -pl !book-integration-tests
+      ```
+    - Run to execute only integration tests
+      ```shell
+      mvn test -pl book-integration-tests
+      ```
+    - Run to build without an execution of unit tests (NOT RECOMMENDED!)
+      ```shell
+      mvn clean install -DskipTests
+      ```
 
 #### OPEN IN IDE:
 
 NOTE: make sure you've build the app via Maven before opening it in the IDE.
 
-For IntelliJ IDEA:
+For IDE [IDEA CE](https://www.jetbrains.com/idea/):
   1. Set up the JDK
   2. Import the project from the root "pom.xml"
 

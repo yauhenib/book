@@ -1,21 +1,18 @@
-# Book
+## Book
 [![Build Status](https://travis-ci.org/Vaisman/book.svg?branch=master)](https://travis-ci.org/Vaisman/book)
 
-====================================================================================================================
-===   Project Book.                                                                                              ===
-===   Build guide.                                                                                               ===      
-====================================================================================================================
 
+###   Build guide.                                                                                              
 
-PREREQUISITES:
-====================================================================================================================
+#### PREREQUISITES:
+
 1. Make sure JDK 8 or higher is installed.
 2. The same for apache maven 3. 
 3. Install a PostgreSQL database (use 'postgres' as default db owner username and '12345678' as default db owner password)
 
 
-PRE-BUILD STEPS:
-====================================================================================================================
+#### PRE-BUILD STEPS:
+
 HINT: make sure your project folder doesn't contain spaces
 
 1. Execute credb.sql script from the "book-resources/db/" module or use credb.bat/credb.sh (Windows/Linux).
@@ -29,33 +26,26 @@ HINT: make sure your project folder doesn't contain spaces
    - It's not recommended to change "booktester" and temporary "bookdbtest" DB name.
 
 
-BUILD:
-====================================================================================================================
+#### BUILD:
+
 1. Run "mvn clean install"
     a. Run "mvn clean install -pl !book-integration-tests" to skip integration tests
     b. Run "mvn test -pl book-integration-tests" to execute only integration tests
     c. Run "mvn clean install -DskipTests" to build without an execution of unit tests (NOT RECOMMENDED!)
 
 
-OPEN IN IDE:
-====================================================================================================================
+#### OPEN IN IDE:
+
 NOTE: make sure you've build the app via Maven before opening it in the IDE.
 
 For IntelliJ IDEA:
   1. Set up the JDK
   2. Import the project from the root "pom.xml"
 
-For Eclipse:
-  TBD - anyone please contribute here! 
+#### LAUNCH THE APPLICATION:
 
-
-LAUNCH THE APPLICATION:
-====================================================================================================================
 For IntelliJ IDEA:
   1. Create a Run/Debug configuration of "Application" type, set the "com.igels.book.BookApplication" as a main class. 
-
-For Eclipse:
-  TBD - anyone please contribute here! 
 
 Check the running application via:
 - opening the endpoint URL, e.g. https://localhost:8443/api/v2/projects/all (empty json array is displayed)

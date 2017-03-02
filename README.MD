@@ -4,14 +4,14 @@
 
 ###   Build guide.                                                                                              
 
-#### PREREQUISITES:
+#### Prerequisites:
 
 1. Make sure JDK 8 or higher is installed.
 2. The same for apache [Maven](https://maven.apache.org/) version 3.3.1 or higher. 
 3. Install a [PostgreSQL](https://www.postgresql.org/) database (use 'postgres' as default db owner username and '12345678' as default db owner password)
 
 
-#### PRE-BUILD STEPS:
+#### Pre-build steps:
 
 HINT: make sure your project folder doesn't contain spaces
 
@@ -26,7 +26,7 @@ HINT: make sure your project folder doesn't contain spaces
    - It's not recommended to change "booktester" and temporary "bookdbtest" DB name.
 
 
-#### BUILD:
+#### Build:
 
 1. Run "mvn clean install"
     - Run to skip integration tests.
@@ -42,7 +42,7 @@ HINT: make sure your project folder doesn't contain spaces
       mvn clean install -DskipTests
       ```
 
-#### OPEN IN IDE:
+#### Open in IDE:
 
 NOTE: make sure you've build the app via Maven before opening it in the IDE.
 
@@ -50,7 +50,7 @@ For IDE [IDEA CE](https://www.jetbrains.com/idea/):
   1. Set up the JDK
   2. Import the project from the root "pom.xml"
 
-#### LAUNCH THE APPLICATION:
+#### Launch the application:
 
 For IntelliJ IDEA:
   1. Create a Run/Debug configuration of "Application" type, set the "com.igels.book.BookApplication" as a main class. 

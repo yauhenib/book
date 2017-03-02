@@ -1,3 +1,6 @@
+# Book
+[![Build Status](https://travis-ci.org/Vaisman/book.svg?branch=master)](https://travis-ci.org/Vaisman/book)
+
 ====================================================================================================================
 ===   Project Book.                                                                                              ===
 ===   Build guide.                                                                                               ===      

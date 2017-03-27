@@ -1,0 +1,9 @@
+{
+    "driver": "org.postgresql.Driver",
+    "protocol": "jdbc:postgresql://",
+    "address": "46.101.193.151",
+    "port": "5432",
+    "database": "book",
+    "user": "vasili_svirski",
+    "password": "123"
+}

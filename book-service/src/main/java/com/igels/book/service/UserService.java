@@ -36,7 +36,6 @@ public class UserService implements IUserService {
             this.userPersistency = userPersistency;
         } catch (Exception e) {
             logger.error("Error:", e);
-            e.printStackTrace();
             throw new DataAccessException(e.getMessage());
         }
     }

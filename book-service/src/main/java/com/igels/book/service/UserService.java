@@ -3,7 +3,7 @@ package com.igels.book.service;
 import com.igels.book.entity.UserInfo;
 import com.igels.book.exceptions.DataAccessException;
 import com.igels.book.exceptions.DataValidationException;
-import com.igels.book.persistency.UserPersistency;
+import com.igels.book.persistency.IPersistency;
 import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
@@ -17,7 +17,7 @@ public class UserService implements IUserService {
     /**
      * User persistency
      */
-    private UserPersistency userPersistency = null;
+    private IPersistency userPersistency = null;
 
     /**
      * log4j logger
@@ -30,7 +30,7 @@ public class UserService implements IUserService {
      * @param userPersistency
      * @throws DataAccessException
      */
-    public UserService(UserPersistency userPersistency) throws DataAccessException {
+    public UserService(IPersistency userPersistency) throws DataAccessException {
         try {
             logger.debug("Create user persistence.");
             this.userPersistency = userPersistency;
@@ -49,7 +49,7 @@ public class UserService implements IUserService {
      */
     public List<UserInfo> enumerateUsers() throws DataAccessException {
         try {
-            List<UserInfo> users = userPersistency.enumerateUsers();
+            List<UserInfo> users = userPersistency.enumerateItems();
             logger.debug(users.toString());
             return users;
         } catch (SQLException e) {
@@ -69,7 +69,7 @@ public class UserService implements IUserService {
     public UserInfo getUserById(Integer userId) throws DataAccessException, DataValidationException {
         UserValidationHelper.validateId(userId);
         try {
-            UserInfo userInfo = userPersistency.getUserById(userId);
+            UserInfo userInfo = (UserInfo) userPersistency.getItemById(userId);
             logger.debug(userInfo);
             return userInfo;
         } catch (SQLException e) {
@@ -89,7 +89,7 @@ public class UserService implements IUserService {
     public Integer addUser(UserInfo userInfo) throws DataAccessException, DataValidationException {
         UserValidationHelper.validateUser(userInfo);
         try {
-            Integer id = userPersistency.addUser(userInfo);
+            Integer id = userPersistency.addItem(userInfo);
             logger.debug(id);
             return id;
         } catch (SQLException e) {
@@ -109,7 +109,7 @@ public class UserService implements IUserService {
     public Integer updateUser(UserInfo userInfo) throws DataAccessException, DataValidationException {
         UserValidationHelper.validateUser(userInfo);
         try {
-            Integer id = userPersistency.updateUser(userInfo);
+            Integer id = userPersistency.updateItem(userInfo);
             logger.debug(id);
             return id;
         } catch (SQLException e) {
@@ -129,7 +129,7 @@ public class UserService implements IUserService {
     public Integer deleteUser(Integer userId) throws DataAccessException, DataValidationException {
         UserValidationHelper.validateId(userId);
         try {
-            Integer id = userPersistency.deleteUser(userId);
+            Integer id = userPersistency.deleteItem(userId);
             logger.debug(id);
             return id;
         } catch (SQLException e) {

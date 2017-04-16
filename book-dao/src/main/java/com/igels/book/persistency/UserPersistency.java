@@ -22,7 +22,7 @@ import javafx.util.Pair;
 /**
  * Users persistency to CRUD Users.
  */
-public class UserPersistency {
+public class UserPersistency implements IPersistency<UserInfo> {
 
     /**
      * log4j logger
@@ -55,7 +55,7 @@ public class UserPersistency {
      * @return List<UserInfo>
      * @throws SQLException
      */
-    public List<UserInfo> enumerateUsers() throws SQLException {
+    public List<UserInfo> enumerateItems() throws SQLException {
         String query = QueryConstructor.construct(QueryType.SELECT, TablesName.USERS, Optional.empty());
         logger.debug(query);
 
@@ -78,7 +78,7 @@ public class UserPersistency {
      * @return UserInfo
      * @throws SQLException
      */
-    public UserInfo getUserById(Integer userId) throws SQLException {
+    public UserInfo getItemById(Integer userId) throws SQLException {
         String query = QueryConstructor.construct(QueryType.SELECT, TablesName.USERS, Optional.of(userId));
         logger.debug(query);
 
@@ -102,7 +102,7 @@ public class UserPersistency {
      * @return Integer, user id
      * @throws SQLException
      */
-    public Integer addUser(UserInfo userInfo) throws SQLException {
+    public Integer addItem(UserInfo userInfo) throws SQLException {
 
         userInfo.setCreated(TimestampHelper.getTimestamp());
 
@@ -136,7 +136,7 @@ public class UserPersistency {
      * @return Integer, user id
      * @throws SQLException
      */
-    public Integer updateUser(UserInfo userInfo) throws SQLException {
+    public Integer updateItem(UserInfo userInfo) throws SQLException {
 
         String fieldsValues = QueryConstructor.constructFieldsValues(
                 new Pair<>(UserFieldsName.RoleId, userInfo.getRoleId()),
@@ -159,7 +159,7 @@ public class UserPersistency {
      * @return Integer, user id
      * @throws SQLException
      */
-    public Integer deleteUser(Integer userId) throws SQLException {
+    public Integer deleteItem(Integer userId) throws SQLException {
         String query = QueryConstructor.construct(QueryType.DELETE, TablesName.USERS, Optional.of(userId));
         logger.debug(query);
         return session.executeUpdate(query);

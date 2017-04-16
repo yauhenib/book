@@ -22,7 +22,6 @@ public class UserValidationHelperTest {
     @Test
     public void testValidateUser() throws DataValidationException {
         UserInfo userInfo = new UserInfo(1);
-
         try {
             UserValidationHelper.validateUser(userInfo);
             fail("User without name no throw.");

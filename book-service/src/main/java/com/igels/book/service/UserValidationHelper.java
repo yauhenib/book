@@ -17,6 +17,10 @@ class UserValidationHelper {
     }
 
     static void validateUser(UserInfo userInfo) throws DataValidationException {
+        if (userInfo.getName() == null || userInfo.getName().isEmpty()) {
+            throw new DataValidationException("Empty user name.");
+        }
+
         if (userInfo.getName().length() > 100) {
             String message = "User name =" + userInfo.getName() + " is too long.";
             logger.warn(message);

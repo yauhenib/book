@@ -1,4 +1,4 @@
-package com.igels.book.entity;
+package com.igels.book.common;
 
 /**
  * Base class to all entities (Users, Books)

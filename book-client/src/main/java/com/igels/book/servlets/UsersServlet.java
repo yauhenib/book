@@ -4,8 +4,8 @@ import com.igels.book.common.RequestEntity;
 import com.igels.book.client.RequestType;
 import com.igels.book.client.RestFullClient;
 import com.igels.book.client.ServiceConnectionInfo;
-import com.igels.book.common.PagesName;
-import com.igels.book.entity.UserInfo;
+import com.igels.book.common.UserPagesName;
+import com.igels.book.user.UserInfo;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
 import org.apache.log4j.Logger;
@@ -121,7 +121,7 @@ public final class UsersServlet extends HttpServlet {
         UserInfo userInfo = clientResponse.getEntity(UserInfo.class);
         req.setAttribute(RequestEntity.User.getValue(), userInfo);
 
-        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(users + PagesName.User.getValue());
+        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(users + UserPagesName.User.getValue());
         requestDispatcher.forward(req, resp);
     }
 
@@ -141,7 +141,7 @@ public final class UsersServlet extends HttpServlet {
         List<UserInfo> usersList = clientResponse.getEntity(usersListType);
         req.setAttribute(RequestEntity.Users.getValue(), usersList);
 
-        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(users + PagesName.Users.getValue());
+        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(users + UserPagesName.Users.getValue());
         requestDispatcher.forward(req, resp);
     }
 
@@ -162,7 +162,7 @@ public final class UsersServlet extends HttpServlet {
         Integer removedUserId = clientResponse.getEntity(Integer.class);
         req.setAttribute(RequestEntity.User.getValue(), new UserInfo(removedUserId));
 
-        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(users + PagesName.DeleteUser.getValue());
+        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(users + UserPagesName.DeleteUser.getValue());
         requestDispatcher.forward(req, resp);
     }
 
@@ -184,7 +184,7 @@ public final class UsersServlet extends HttpServlet {
         userInfo.setId(result);
         req.setAttribute(RequestEntity.User.getValue(), userInfo);
 
-        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(users + PagesName.AddUser.getValue());
+        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(users + UserPagesName.AddUser.getValue());
         requestDispatcher.forward(req, resp);
     }
 
@@ -197,7 +197,7 @@ public final class UsersServlet extends HttpServlet {
      * @throws IOException
      */
     private void addUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(users + PagesName.AddUser.getValue());
+        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(users + UserPagesName.AddUser.getValue());
         requestDispatcher.forward(req, resp);
     }
 
@@ -218,7 +218,7 @@ public final class UsersServlet extends HttpServlet {
         UserInfo userInfo = clientResponse.getEntity(UserInfo.class);
         req.setAttribute(RequestEntity.User.getValue(), userInfo);
 
-        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(users + PagesName.EditUser.getValue());
+        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(users + UserPagesName.EditUser.getValue());
         requestDispatcher.forward(req, resp);
     }
 
@@ -241,7 +241,7 @@ public final class UsersServlet extends HttpServlet {
         userInfo.setName("");
         req.setAttribute(RequestEntity.User.getValue(), userInfo);
 
-        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(users + PagesName.EditUser.getValue());
+        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(users + UserPagesName.EditUser.getValue());
         requestDispatcher.forward(req, resp);
     }
 }

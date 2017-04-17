@@ -1,17 +1,14 @@
-package com.igels.book.entity;
+package com.igels.book.role;
+
+import com.igels.book.common.IFieldsName;
 
 /**
- * User table fields name class.
+ * Roles table fields name class.
  */
-public enum UserFieldsName implements IFieldsName {
+public enum RoleFieldsName implements IFieldsName {
 
     Id("id"),
-    RoleId("role_id"),
-    Name("name"),
-    Surname("surname"),
-    Email("email"),
-    Password("password"),
-    Created("created");
+    Name("role_name");
 
     /**
      * String value of enum.
@@ -23,7 +20,7 @@ public enum UserFieldsName implements IFieldsName {
      *
      * @param value string eum value.
      */
-    UserFieldsName(String value) {
+    RoleFieldsName(String value) {
         this.value = value;
     }
 

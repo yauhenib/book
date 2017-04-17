@@ -1,4 +1,4 @@
-package com.igels.book.entity;
+package com.igels.book.user;
 
 import org.junit.Test;
 

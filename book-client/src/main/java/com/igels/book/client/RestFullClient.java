@@ -1,6 +1,6 @@
 package com.igels.book.client;
 
-import com.igels.book.entity.Entity;
+import com.igels.book.common.Entity;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;

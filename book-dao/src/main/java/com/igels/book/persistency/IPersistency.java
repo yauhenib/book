@@ -1,6 +1,6 @@
 package com.igels.book.persistency;
 
-import com.igels.book.entity.Entity;
+import com.igels.book.common.Entity;
 
 import java.sql.SQLException;
 import java.util.List;

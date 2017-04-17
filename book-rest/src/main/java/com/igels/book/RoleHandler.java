@@ -1,42 +1,41 @@
 package com.igels.book;
 
-import com.igels.book.user.UserInfo;
-import com.igels.book.exceptions.DataAccessException;
-import com.igels.book.exceptions.DataValidationException;
-import com.igels.book.persistency.UserPersistency;
-import com.igels.book.service.users.IUserService;
-import com.igels.book.service.users.UserService;
-import org.apache.log4j.Logger;
-
+import java.net.ConnectException;
+import java.util.List;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import java.net.ConnectException;
-import java.util.List;
+import com.igels.book.exceptions.DataAccessException;
+import com.igels.book.exceptions.DataValidationException;
+import com.igels.book.persistency.RolePersistency;
+import com.igels.book.role.RoleInfo;
+import com.igels.book.service.roles.IRoleService;
+import com.igels.book.service.roles.RoleService;
+import org.apache.log4j.Logger;
 
 /**
- * User handler class
+ * Role handler class
  */
-@Path("/users")
-public class UserHandler {
+@Path("/roles")
+public class RoleHandler<T> {
 
     /**
      * log4j logger
      */
-    private final static Logger logger = Logger.getLogger(UserHandler.class);
+    private final static Logger logger = Logger.getLogger(RoleHandler.class);
 
     /**
      * User service interface
      */
-    private IUserService userService = null;
+    private IRoleService roleService = null;
 
     /**
      * Error message
@@ -44,16 +43,15 @@ public class UserHandler {
     private final String errorMessage = "Error:";
 
     /**
-     * User handler constructor
+     * Role handler constructor
      */
-    public UserHandler() {
+    public RoleHandler() {
         logger.debug("Construct handler");
         try {
-            UserPersistency persistency = new UserPersistency();
-            userService = new UserService(persistency);
+            RolePersistency persistency = new RolePersistency();
+            roleService = new RoleService(persistency);
         } catch (DataAccessException | ConnectException e) {
-             logger.error(errorMessage, e);
-            e.printStackTrace();
+            logger.error(errorMessage, e);
         }
     }
 
@@ -65,9 +63,9 @@ public class UserHandler {
     @Produces({MediaType.APPLICATION_JSON})
     public Response get() {
         try {
-            List<UserInfo> users = userService.enumerateUsers();
-            logger.debug(users.toString());
-            return Response.ok().entity(users).build();
+            List<RoleInfo> roles = roleService.enumerateRoles();
+            logger.debug(roles.toString());
+            return Response.ok().entity(roles).build();
         } catch (DataAccessException e) {
             logger.error(errorMessage, e);
             return Response.ok().entity(e.getMessage()).build();
@@ -76,17 +74,17 @@ public class UserHandler {
 
     /**
      * Get by id REST request handler.
-     * @param id of user
+     * @param id of roles
      * @return Response
      */
     @GET
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response getUser(@PathParam("id") Integer id) {
+    public Response getRole(@PathParam("id") Integer id) {
         try {
-            UserInfo user = userService.getUserById(id);
-            logger.debug(user.toString());
-            return Response.ok().entity(user).build();
+            RoleInfo role = roleService.getRoleById(id);
+            logger.debug(role.toString());
+            return Response.ok().entity(role).build();
         } catch (DataAccessException | DataValidationException e) {
             logger.error(errorMessage, e);
             return Response.ok().entity(e.getMessage()).build();
@@ -95,19 +93,19 @@ public class UserHandler {
 
     /**
      * Put REST request handler.
-     * @param userInfo
+     * @param roleInfo
      * @return Response
      */
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addUser(UserInfo userInfo) {
+    public Response addRole(RoleInfo roleInfo) {
         try {
             // TODO
             // validators
-            int userId = userService.addUser(userInfo);
-            logger.debug(userId);
-            return Response.ok().entity(userId).build();
+            int roleId = roleService.addRole(roleInfo);
+            logger.debug(roleId);
+            return Response.ok().entity(roleId).build();
         } catch (DataAccessException | DataValidationException e) {
             logger.error(errorMessage, e);
             return Response.ok().entity(e.getMessage()).build();
@@ -116,21 +114,21 @@ public class UserHandler {
 
     /**
      * Update REST request handler
-     * @param id of user
-     * @param userInfo
+     * @param id of roles
+     * @param roleInfo
      * @return Response
      */
     @POST
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateEmployeeById(@PathParam("id") Integer id, UserInfo userInfo) {
+    public Response updateRoleById(@PathParam("id") Integer id, RoleInfo roleInfo) {
         try {
             // TODO
             // validators
-            int userId = userService.updateUser(userInfo);
-            logger.debug(userId);
-            return Response.ok().entity(userId).build();
+            int roleId = roleService.updateRole(roleInfo);
+            logger.debug(roleId);
+            return Response.ok().entity(roleId).build();
         } catch (DataAccessException | DataValidationException e) {
             logger.error(errorMessage, e);
             return Response.ok().entity(e.getMessage()).build();
@@ -139,19 +137,19 @@ public class UserHandler {
 
     /**
      * Delete REST request handler
-     * @param id of user
+     * @param id of role
      * @return Response
      */
     @DELETE
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response deleteUser(@PathParam("id") Integer id) {
+    public Response deleteRole(@PathParam("id") Integer id) {
         try {
             // TODO
             // validators
-            Integer userId = userService.deleteUser(id);
-            logger.debug(userId);
-            return Response.ok().entity(userId).build();
+            Integer roleId = roleService.deleteRole(id);
+            logger.debug(roleId);
+            return Response.ok().entity(roleId).build();
         } catch (DataAccessException | DataValidationException e) {
             logger.error(errorMessage, e);
             return Response.ok().entity(e.getMessage()).build();

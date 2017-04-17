@@ -1,8 +1,10 @@
 package com.igels.book.servlets;
 
 import com.igels.book.client.RequestType;
-import com.igels.book.entity.UserFieldsName;
-import com.igels.book.entity.UserInfo;
+import com.igels.book.role.RoleFieldsName;
+import com.igels.book.role.RoleInfo;
+import com.igels.book.user.UserFieldsName;
+import com.igels.book.user.UserInfo;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -73,5 +75,17 @@ class RequestHelper {
         userInfo.setEmail(req.getParameter(UserFieldsName.Email.getValue()));
         userInfo.setPassword(req.getParameter(UserFieldsName.Password.getValue()));
         return userInfo;
+    }
+
+    /**
+     * Fill role info
+     *
+     * @param req
+     * @return RoleInfo
+     */
+    static RoleInfo fillRoleInfo(HttpServletRequest req) {
+        RoleInfo roleInfo = new RoleInfo();
+        roleInfo.setName(req.getParameter(RoleFieldsName.Name.getValue()));
+        return roleInfo;
     }
 }

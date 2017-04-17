@@ -1,29 +1,35 @@
 package com.igels.book.common;
 
 /**
- * This enum connect String names of request entities.
+ * This enum connect String pages names.
  */
-public enum RequestEntity {
+public enum RolePagesName {
 
     /**
-     * User entity name.
+     * Roles page name.
      */
-    User("user"),
+    Roles("Roles.jsp"),
 
     /**
-     * Users entity name.
+     * Role page name.
      */
-    Users("users"),
+    Role("Role.jsp"),
 
     /**
-     * Role entity name.
+     * AddRole page name.
      */
-    Role("role"),
+    AddRole("AddRole.jsp"),
 
     /**
-     * Role entity name.
+     * EditRole page name.
      */
-    Roles("roles");
+    EditRole("EditRole.jsp"),
+
+
+    /**
+     * DeleteRole page name.
+     */
+    DeleteRole("DeleteRole.jsp");
 
     /**
      * String value of enum.
@@ -32,14 +38,16 @@ public enum RequestEntity {
 
     /**
      * Set enum string value.
+     *
      * @param value string eum value.
      */
-    RequestEntity(String value) {
+    RolePagesName(String value) {
         this.value = value;
     }
 
     /**
      * Return enum string value.
+     *
      * @return String value of enum.
      */
     public String getValue() {

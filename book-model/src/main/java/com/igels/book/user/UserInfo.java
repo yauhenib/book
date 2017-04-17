@@ -1,4 +1,6 @@
-package com.igels.book.entity;
+package com.igels.book.user;
+
+import com.igels.book.common.Entity;
 
 /**
  * User info class.

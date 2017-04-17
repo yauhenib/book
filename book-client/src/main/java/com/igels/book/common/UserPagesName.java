@@ -1,32 +1,33 @@
 package com.igels.book.common;
 
 /**
+ /**
  * This enum connect String pages names.
  */
-public enum PagesName {
+public enum UserPagesName {
 
     /**
-     * Users table name.
+     * Users page name.
      */
     Users("Users.jsp"),
 
     /**
-     * User table name.
+     * User page name.
      */
     User("User.jsp"),
 
     /**
-     * AddUser table name.
+     * AddUser page name.
      */
     AddUser("AddUser.jsp"),
 
     /**
-     * Edit user table name.
+     * Edit user page name.
      */
     EditUser("EditUser.jsp"),
 
     /**
-     * Delete user table name.
+     * Delete user page name.
      */
     DeleteUser("DeleteUser.jsp");
 
@@ -40,7 +41,7 @@ public enum PagesName {
      *
      * @param value string eum value.
      */
-    PagesName(String value) {
+    UserPagesName(String value) {
         this.value = value;
     }
 

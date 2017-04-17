@@ -1,19 +1,19 @@
-package com.igels.book.common;
+package com.igels.book.user;
+
+import com.igels.book.common.IFieldsName;
 
 /**
- * This enum contains string tables name.
+ * User table fields name class.
  */
-public enum TablesName {
+public enum UserFieldsName implements IFieldsName {
 
-    /**
-     * Users table name.
-     */
-    USERS("Users"),
-
-    /**
-     * Users table name.
-     */
-    ROLES("Roles");
+    Id("id"),
+    RoleId("role_id"),
+    Name("name"),
+    Surname("surname"),
+    Email("email"),
+    Password("password"),
+    Created("created");
 
     /**
      * String value of enum.
@@ -25,7 +25,7 @@ public enum TablesName {
      *
      * @param value string eum value.
      */
-    TablesName(String value) {
+    UserFieldsName(String value) {
         this.value = value;
     }
 

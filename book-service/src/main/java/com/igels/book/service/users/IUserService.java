@@ -1,6 +1,6 @@
-package com.igels.book.service;
+package com.igels.book.service.users;
 
-import com.igels.book.entity.UserInfo;
+import com.igels.book.user.UserInfo;
 import com.igels.book.exceptions.DataAccessException;
 import com.igels.book.exceptions.DataValidationException;
 

@@ -44,6 +44,45 @@
         <url-pattern>/Users/DeleteUser/*</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>RolesServlet</servlet-name>
+        <servlet-class>com.igels.book.servlets.RolesServlet</servlet-class>
+        <init-param>
+            <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>RolesServlet</servlet-name>
+        <url-pattern>/Roles/Roles</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>RolesServlet</servlet-name>
+        <url-pattern>/Roles/Roles/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>RolesServlet</servlet-name>
+        <url-pattern>/Roles/AddRole</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>RolesServlet</servlet-name>
+        <url-pattern>/Roles/EditRole/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>RolesServlet</servlet-name>
+        <url-pattern>/Roles/EditRole</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>RolesServlet</servlet-name>
+        <url-pattern>/Roles/DeleteRole/*</url-pattern>
+    </servlet-mapping>
+
     <error-page>
         <error-code>404</error-code>
         <location>/error.jsp</location>

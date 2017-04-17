@@ -1,7 +1,7 @@
 package com.igels.book.persistency;
 
 import com.igels.book.common.TablesName;
-import com.igels.book.entity.IFieldsName;
+import com.igels.book.common.IFieldsName;
 import com.igels.book.query.QueryType;
 import javafx.util.Pair;
 

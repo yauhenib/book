@@ -1,17 +1,15 @@
-package com.igels.book.entity;
+package com.igels.book.user;
+
+import com.igels.book.common.InfoHelper;
 
 /**
  * Class helper to User info serialization
  */
-class UserInfoHelper {
-
-    private static final String delimiter = ", ";
-    private static final String beginTerminator = "{";
-    private static final String endTerminator = "}";
-    private static final String assign = "=";
+class UserInfoHelper extends InfoHelper {
 
     /**
      * User info to string
+     *
      * @param userInfo
      * @return String
      */

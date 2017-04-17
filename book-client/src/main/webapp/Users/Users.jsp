@@ -33,7 +33,6 @@
         <td width="50">Name</td>
         <td width="50">Surname</td>
         <td width="70">Email</td>
-        <td width="70">Password</td>
         <td width="70">Created</td>
         <td width="40"></td>
         <td width="40"></td>
@@ -49,7 +48,6 @@
         <td><a>${user.name}</a></td>
         <td><a>${user.surname}</a></td>
         <td><a>${user.email}</a></td>
-        <td><a>${user.password}</a></td>
         <td><a>${user.created}</a></td>
         <td>
             <button onclick="location.href='/book-client/Users/EditUser/${user.id}'" type="button">Edit</button>

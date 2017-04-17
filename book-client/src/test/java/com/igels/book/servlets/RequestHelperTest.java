@@ -312,11 +312,8 @@ public class RequestHelperTest {
 
         HttpServletRequest mock4 = new MockHttpServletRequest("Get");
         assertEquals(RequestType.GET, RequestHelper.readType(mock4));
-    }
 
-    @Test(expected = Exception.class)
-    public void testUnknownRequest() throws Exception {
         HttpServletRequest mock5 = new MockHttpServletRequest("unknown");
-        RequestHelper.readType(mock5);
+        assertEquals(RequestType.GET, RequestHelper.readType(mock5));
     }
 }

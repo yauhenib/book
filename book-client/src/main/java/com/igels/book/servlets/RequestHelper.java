@@ -3,6 +3,7 @@ package com.igels.book.servlets;
 import com.igels.book.client.RequestType;
 import com.igels.book.entity.UserFieldsName;
 import com.igels.book.entity.UserInfo;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,6 +14,11 @@ import javax.servlet.http.HttpServletRequest;
  * Full user info from request.
  */
 class RequestHelper {
+
+    /**
+     * log4j logger.
+     */
+    private final static Logger logger = Logger.getLogger(UsersServlet.class);
 
     /**
      * Read GET param from HttpServletRequest
@@ -36,21 +42,21 @@ class RequestHelper {
      * @param req HttpServletRequest.
      * @return RequestType
      */
-    static RequestType readType(HttpServletRequest req) throws Exception {
+    static RequestType readType(HttpServletRequest req) {
 
-        if (req.getRequestURI().contains(RequestType.DELETE.getValue()))
+        logger.debug(req.getRequestURI());
+        String requestUri = req.getRequestURI();
+
+        if (requestUri.contains(RequestType.DELETE.getValue()))
             return RequestType.DELETE;
 
-        if (req.getRequestURI().contains(RequestType.PUT.getValue()))
+        if (requestUri.contains(RequestType.PUT.getValue()))
             return RequestType.PUT;
 
-        if (req.getRequestURI().contains(RequestType.POST.getValue()))
+        if (requestUri.contains(RequestType.POST.getValue()))
             return RequestType.POST;
 
-        if (req.getRequestURI().contains(RequestType.GET.getValue()))
-            return RequestType.GET;
-
-        throw new Exception("Unknown request type:" + req.getRequestURI());
+        return RequestType.GET;
     }
 
     /**

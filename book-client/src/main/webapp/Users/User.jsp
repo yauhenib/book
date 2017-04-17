@@ -25,9 +25,6 @@
     Email: <c:out value="${user.email}"/>
 </p>
 <p>
-    Password: <c:out value="${user.password}"/>
-</p>
-<p>
     Created: <c:out value="${user.created}"/>
 </p>
 <br/>

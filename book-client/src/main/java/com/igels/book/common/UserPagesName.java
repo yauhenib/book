@@ -1,7 +1,6 @@
 package com.igels.book.common;
 
 /**
- /**
  * This enum connect String pages names.
  */
 public enum UserPagesName {

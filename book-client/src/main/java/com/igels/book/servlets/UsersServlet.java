@@ -5,13 +5,16 @@ import com.igels.book.client.RequestType;
 import com.igels.book.client.RestFullClient;
 import com.igels.book.client.ServiceConnectionInfo;
 import com.igels.book.common.UserPagesName;
+import com.igels.book.role.RoleInfo;
 import com.igels.book.user.UserInfo;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
+import javafx.util.Pair;
 import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,9 +40,19 @@ public final class UsersServlet extends HttpServlet {
     private final URI userAddress = ServiceConnectionInfo.getAddress(RequestEntity.Users);
 
     /**
+     * Roles service address.
+     */
+    private final URI rolesAddress = ServiceConnectionInfo.getAddress(RequestEntity.Roles);
+
+    /**
      * REST Full client.
      */
-    private final RestFullClient<UserInfo> restFullClient = new RestFullClient<>(userAddress);
+    private final RestFullClient<UserInfo> userRestFullClient = new RestFullClient<>(userAddress);
+
+    /**
+     * REST Full client.
+     */
+    private final RestFullClient<RoleInfo> rolesRestFullClient = new RestFullClient<>(rolesAddress);
 
     /**
      * Users path name.
@@ -116,10 +129,13 @@ public final class UsersServlet extends HttpServlet {
      */
     private void showUser(int userId, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logger.debug("Show user with id " + userId);
-        ClientResponse clientResponse = restFullClient.sendMessage(RequestType.GET, Optional.of(new UserInfo(userId)));
+        ClientResponse clientResponse = userRestFullClient.sendMessage(RequestType.GET, Optional.of(new UserInfo(userId)));
 
         UserInfo userInfo = clientResponse.getEntity(UserInfo.class);
         req.setAttribute(RequestEntity.User.getValue(), userInfo);
+
+        RoleInfo roleInfo = getRoleInfo(userInfo.getRoleId());
+        req.setAttribute(RequestEntity.Role.getValue(), roleInfo);
 
         RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(users + UserPagesName.User.getValue());
         requestDispatcher.forward(req, resp);
@@ -134,12 +150,18 @@ public final class UsersServlet extends HttpServlet {
      * @throws IOException
      */
     private void showUsers(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ClientResponse clientResponse = restFullClient.sendMessage(RequestType.GET, Optional.empty());
+        ClientResponse clientResponse = userRestFullClient.sendMessage(RequestType.GET, Optional.empty());
 
         GenericType<List<UserInfo>> usersListType = new GenericType<List<UserInfo>>() {
         };
         List<UserInfo> usersList = clientResponse.getEntity(usersListType);
-        req.setAttribute(RequestEntity.Users.getValue(), usersList);
+
+        List<Pair<UserInfo, RoleInfo>> pairList = new ArrayList<>();
+        for (UserInfo userInfo : usersList) {
+            RoleInfo roleInfo = getRoleInfo(userInfo.getRoleId());
+            pairList.add(new Pair<>(userInfo, roleInfo));
+        }
+        req.setAttribute(RequestEntity.Users.getValue(), pairList);
 
         RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(users + UserPagesName.Users.getValue());
         requestDispatcher.forward(req, resp);
@@ -157,7 +179,7 @@ public final class UsersServlet extends HttpServlet {
     private void deleteUser(int userId, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logger.debug("Delete user with id " + userId);
 
-        ClientResponse clientResponse = restFullClient.sendMessage(RequestType.DELETE, Optional.of(new UserInfo(userId)));
+        ClientResponse clientResponse = userRestFullClient.sendMessage(RequestType.DELETE, Optional.of(new UserInfo(userId)));
 
         Integer removedUserId = clientResponse.getEntity(Integer.class);
         req.setAttribute(RequestEntity.User.getValue(), new UserInfo(removedUserId));
@@ -178,7 +200,7 @@ public final class UsersServlet extends HttpServlet {
     private void addUserPut(UserInfo userInfo, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logger.debug("Add user " + userInfo.toString());
 
-        ClientResponse clientResponse = restFullClient.sendMessage(RequestType.PUT, Optional.of(userInfo));
+        ClientResponse clientResponse = userRestFullClient.sendMessage(RequestType.PUT, Optional.of(userInfo));
         Integer result = clientResponse.getEntity(Integer.class);
 
         userInfo.setId(result);
@@ -213,10 +235,16 @@ public final class UsersServlet extends HttpServlet {
     private void editUser(int userId, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logger.debug("Edit user with id " + userId);
 
-        ClientResponse clientResponse = restFullClient.sendMessage(RequestType.GET, Optional.of(new UserInfo(userId)));
+        ClientResponse usersClientResponse = userRestFullClient.sendMessage(RequestType.GET, Optional.of(new UserInfo(userId)));
 
-        UserInfo userInfo = clientResponse.getEntity(UserInfo.class);
+        UserInfo userInfo = usersClientResponse.getEntity(UserInfo.class);
         req.setAttribute(RequestEntity.User.getValue(), userInfo);
+
+        ClientResponse rolesClientResponse = rolesRestFullClient.sendMessage(RequestType.GET, Optional.empty());
+        GenericType<List<RoleInfo>> rolesListType = new GenericType<List<RoleInfo>>() {
+        };
+        List<RoleInfo> rolesList = rolesClientResponse.getEntity(rolesListType);
+        req.setAttribute(RequestEntity.Roles.getValue(), rolesList);
 
         RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(users + UserPagesName.EditUser.getValue());
         requestDispatcher.forward(req, resp);
@@ -234,7 +262,7 @@ public final class UsersServlet extends HttpServlet {
     private void editUserPost(UserInfo userInfo, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logger.debug("Edit user " + userInfo.toString());
 
-        ClientResponse clientResponse = restFullClient.sendMessage(RequestType.POST, Optional.of(userInfo));
+        ClientResponse clientResponse = userRestFullClient.sendMessage(RequestType.POST, Optional.of(userInfo));
         Integer result = clientResponse.getEntity(Integer.class);
 
         userInfo.setId(result);
@@ -243,5 +271,13 @@ public final class UsersServlet extends HttpServlet {
 
         RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(users + UserPagesName.EditUser.getValue());
         requestDispatcher.forward(req, resp);
+    }
+
+     private RoleInfo getRoleInfo(int roleId) {
+         RoleInfo roleInfo = new RoleInfo();
+         roleInfo.setId(roleId);
+
+         ClientResponse clientResponse = rolesRestFullClient.sendMessage(RequestType.GET, Optional.of(roleInfo));
+         return clientResponse.getEntity(RoleInfo.class);
     }
 }

@@ -29,7 +29,7 @@
     <thead>
     <tr bgcolor="gray">
         <td width="30">Id</td>
-        <td width="30">RoleId</td>
+        <td width="30">Role</td>
         <td width="50">Name</td>
         <td width="50">Surname</td>
         <td width="70">Email</td>
@@ -41,19 +41,19 @@
     <tbody>
  
     <%--@elvariable id="users" type="java.util.List"--%>
-    <c:forEach var="user" items="${users}">
+    <c:forEach var="pair" items="${users}">
     <tr>
-        <td><a href="/book-client/Users/User/${user.id}">${user.id}</a></td>
-        <td><a>${user.roleId}</a></td>
-        <td><a>${user.name}</a></td>
-        <td><a>${user.surname}</a></td>
-        <td><a>${user.email}</a></td>
-        <td><a>${user.created}</a></td>
+        <td><a href="/book-client/Users/User/${pair.key.id}">${pair.key.id}</a></td>
+        <td><a>${pair.value.name}</a></td>
+        <td><a>${pair.key.name}</a></td>
+        <td><a>${pair.key.surname}</a></td>
+        <td><a>${pair.key.email}</a></td>
+        <td><a>${pair.key.created}</a></td>
         <td>
-            <button onclick="location.href='/book-client/Users/EditUser/${user.id}'" type="button">Edit</button>
+            <button onclick="location.href='/book-client/Users/EditUser/${pair.key.id}'" type="button">Edit</button>
         </td>
         <td>
-            <button onclick="location.href='/book-client/Users/DeleteUser/${user.id}'" type="button">Delete</button>
+            <button onclick="location.href='/book-client/Users/DeleteUser/${pair.key.id}'" type="button">Delete</button>
         </td>
         </c:forEach>
     </tbody>

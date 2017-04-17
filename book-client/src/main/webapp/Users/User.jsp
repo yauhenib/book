@@ -13,7 +13,7 @@
     Id: <c:out value="${user.id}"/>
 </p>
 <p>
-    RoleId: <c:out value="${user.roleId}"/>
+    Role: <c:out value="${role.name}"/>
 </p>
 <p>
     Name: <c:out value="${user.name}"/>

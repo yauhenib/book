@@ -16,7 +16,7 @@
             <table>
                 <thead>
                 <tr bgcolor="gray">
-                    <td width="30">RoleId</td>
+                    <td width="30">Role</td>
                     <td width="50">Name</td>
                     <td width="50">Surname</td>
                     <td width="70">Email</td>
@@ -25,7 +25,20 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td><a><input name="role_id" value="${user.roleId}" title=""/></a></td>
+                    <td>
+                    <a>
+                        <select name='role_id'>
+                            <c:forEach var="role" items="${roles}">
+                                <c:if test="${role.id != user.roleId}">
+                                    <option value="${role.id}">${role.name}</option>
+                                </c:if>
+                                <c:if test="${role.id == user.roleId}">
+                                    <option value="${role.id}" selected>${role.name}</option>
+                                </c:if>
+                            </c:forEach>
+                        </select>
+                    </a>
+                    </td>
                     <td><a><input name="name" value="${user.name}" title=""/></a></td>
                     <td><a><input name="surname" value="${user.surname}" title=""/></a></td>
                     <td><a><input name="email" value="${user.email}" title=""/></a></td>

@@ -70,7 +70,6 @@ public final class UsersServlet extends HttpServlet {
             }
         } catch (Exception e) {
             logger.error("Error:", e);
-            throw e;
         }
     }
 
@@ -103,7 +102,6 @@ public final class UsersServlet extends HttpServlet {
             }
         } catch (Exception e) {
             logger.error("Error:", e);
-            throw e;
         }
     }
 

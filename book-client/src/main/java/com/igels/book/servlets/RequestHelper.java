@@ -36,7 +36,7 @@ class RequestHelper {
      * @param req HttpServletRequest.
      * @return RequestType
      */
-    static RequestType readType(HttpServletRequest req) {
+    static RequestType readType(HttpServletRequest req) throws Exception {
 
         if (req.getRequestURI().contains(RequestType.DELETE.getValue()))
             return RequestType.DELETE;
@@ -47,7 +47,10 @@ class RequestHelper {
         if (req.getRequestURI().contains(RequestType.POST.getValue()))
             return RequestType.POST;
 
-        return RequestType.GET;
+        if (req.getRequestURI().contains(RequestType.GET.getValue()))
+            return RequestType.GET;
+
+        throw new Exception("Unknown request type:" + req.getRequestURI());
     }
 
     /**

@@ -13,11 +13,6 @@ public class DbUtilTest {
 
     @Test
     public void test1() throws SQLException, ConnectException, JSONException {
-
-        UserPersistency p = new UserPersistency();
-        List<UserInfo> users = p.enumerateItems();
-        for (UserInfo user : users) {
-            System.out.println(user.toString());
-        }
+        
     }
 }

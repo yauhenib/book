@@ -1,6 +1,7 @@
 package com.igels.book.persistency;
 
 import com.igels.book.DbUtil;
+import com.igels.book.common.IFieldsName;
 import com.igels.book.common.TablesName;
 import com.igels.book.common.TimestampHelper;
 import com.igels.book.sesion.*;
@@ -105,14 +106,14 @@ public class UserPersistency implements IPersistency<UserInfo> {
     public Integer addItem(UserInfo userInfo) throws SQLException {
 
         userInfo.setCreated(TimestampHelper.getTimestamp());
-
         String fields = QueryConstructor.constructFields(
                 UserFieldsName.RoleId,
                 UserFieldsName.Name,
                 UserFieldsName.Surname,
                 UserFieldsName.Email,
                 UserFieldsName.Password,
-                UserFieldsName.Created
+                UserFieldsName.Created,
+                UserFieldsName.Salt
         );
 
         String values = QueryConstructor.constructValues(
@@ -121,7 +122,8 @@ public class UserPersistency implements IPersistency<UserInfo> {
                 userInfo.getSurname(),
                 userInfo.getEmail(),
                 userInfo.getPassword(),
-                userInfo.getCreated()
+                userInfo.getCreated(),
+                "salt"
         );
 
         String query = QueryConstructor.construct(QueryType.INSERT, TablesName.USERS, fields, values);

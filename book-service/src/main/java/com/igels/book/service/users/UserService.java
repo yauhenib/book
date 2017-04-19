@@ -49,6 +49,7 @@ public class UserService implements IUserService {
     public List<UserInfo> enumerateUsers() throws DataAccessException {
         try {
             List<UserInfo> users = userPersistency.enumerateItems();
+            UserInfoHelper.resetPassword(users);
             logger.debug(users.toString());
             return users;
         } catch (SQLException e) {
@@ -69,6 +70,7 @@ public class UserService implements IUserService {
         UserValidationHelper.validateId(userId);
         try {
             UserInfo userInfo = (UserInfo) userPersistency.getItemById(userId);
+            UserInfoHelper.resetPassword(userInfo);
             logger.debug(userInfo);
             return userInfo;
         } catch (SQLException e) {
@@ -88,6 +90,7 @@ public class UserService implements IUserService {
     public Integer addUser(UserInfo userInfo) throws DataAccessException, DataValidationException {
         UserValidationHelper.validateUser(userInfo);
         try {
+            UserInfoHelper.cryptPassword(userInfo);
             Integer id = userPersistency.addItem(userInfo);
             logger.debug(id);
             return id;

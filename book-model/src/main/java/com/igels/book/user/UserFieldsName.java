@@ -13,7 +13,8 @@ public enum UserFieldsName implements IFieldsName {
     Surname("surname"),
     Email("email"),
     Password("password"),
-    Created("created");
+    Created("created"),
+    Salt("salt");
 
     /**
      * String value of enum.

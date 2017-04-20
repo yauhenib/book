@@ -1,17 +1,27 @@
 package com.igels.book.user;
 
 import com.igels.book.common.Entity;
+import org.hibernate.annotations.Table;
 
 /**
  * User info class.
  */
+@Entity
+@Table(name="Users")
 public class UserInfo extends Entity {
-    private int Id;
-    private int RoleId;
+
+    private Integer Id;
+
+    private Integer RoleId;
+
     private String Name;
+
     private String Surname;
+
     private String Email;
+
     private String Password;
+
     private String Created;
 
     /**
@@ -31,7 +41,7 @@ public class UserInfo extends Entity {
      * Get user id
      * @return int
      */
-    public int getId() {
+    public Integer getId() {
         return Id;
     }
 
@@ -39,7 +49,7 @@ public class UserInfo extends Entity {
      * Set user id
      * @param id user id
      */
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.Id = id;
     }
 

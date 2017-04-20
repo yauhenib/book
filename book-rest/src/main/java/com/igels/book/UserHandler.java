@@ -34,9 +34,27 @@ public class UserHandler {
     private final static Logger logger = Logger.getLogger(UserHandler.class);
 
     /**
+     * User persistency
+     */
+    private static UserPersistency persistency = null;
+
+    /**
      * User service interface
      */
-    private IUserService userService = null;
+    private static IUserService userService = null;
+
+    /**
+     * Persistency and service initializer
+     */
+    static {
+        try {
+            logger.debug("Construct handler");
+            persistency = new UserPersistency();
+            userService = new UserService(persistency);
+        } catch (ConnectException| DataAccessException e) {
+            logger.error(null, e);
+        }
+    }
 
     /**
      * Error message
@@ -47,14 +65,6 @@ public class UserHandler {
      * User handler constructor
      */
     public UserHandler() {
-        logger.debug("Construct handler");
-        try {
-            UserPersistency persistency = new UserPersistency();
-            userService = new UserService(persistency);
-        } catch (DataAccessException | ConnectException e) {
-             logger.error(errorMessage, e);
-            e.printStackTrace();
-        }
     }
 
     /**

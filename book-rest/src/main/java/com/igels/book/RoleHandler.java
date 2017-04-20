@@ -35,7 +35,20 @@ public class RoleHandler<T> {
     /**
      * User service interface
      */
-    private IRoleService roleService = null;
+    private static IRoleService roleService = null;
+
+    /**
+     * Persistency and service initializer
+     */
+    static {
+        logger.debug("Construct handler");
+        try {
+            RolePersistency persistency = new RolePersistency();
+            roleService = new RoleService(persistency);
+        } catch (DataAccessException | ConnectException e) {
+            logger.error(null, e);
+        }
+    }
 
     /**
      * Error message
@@ -46,13 +59,6 @@ public class RoleHandler<T> {
      * Role handler constructor
      */
     public RoleHandler() {
-        logger.debug("Construct handler");
-        try {
-            RolePersistency persistency = new RolePersistency();
-            roleService = new RoleService(persistency);
-        } catch (DataAccessException | ConnectException e) {
-            logger.error(errorMessage, e);
-        }
     }
 
     /**

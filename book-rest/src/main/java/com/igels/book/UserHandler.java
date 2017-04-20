@@ -1,31 +1,25 @@
 package com.igels.book;
 
-import com.igels.book.user.UserInfo;
 import com.igels.book.exceptions.DataAccessException;
 import com.igels.book.exceptions.DataValidationException;
 import com.igels.book.persistency.UserPersistency;
 import com.igels.book.service.users.IUserService;
 import com.igels.book.service.users.UserService;
+import com.igels.book.user.UserInfo;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.apache.log4j.Logger;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import java.net.ConnectException;
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * User handler class
- */
-@Path("/users")
+@Controller
+@RequestMapping("/users")
 public class UserHandler {
 
     /**
@@ -51,7 +45,7 @@ public class UserHandler {
             logger.debug("Construct handler");
             persistency = new UserPersistency();
             userService = new UserService(persistency);
-        } catch (ConnectException| DataAccessException e) {
+        } catch (ConnectException | DataAccessException e) {
             logger.error(null, e);
         }
     }
@@ -68,19 +62,20 @@ public class UserHandler {
     }
 
     /**
-     * Get REST request handler
-     * @return Response
+     *  Get REST request handler.
+     * @return
      */
-    @GET
-    @Produces({MediaType.APPLICATION_JSON})
-    public Response get() {
+    @RequestMapping(method = RequestMethod.GET)
+    public
+    @ResponseBody
+    List<UserInfo> get() {
         try {
             List<UserInfo> users = userService.enumerateUsers();
             logger.debug(users.toString());
-            return Response.ok().entity(users).build();
+            return users;
         } catch (DataAccessException e) {
             logger.error(errorMessage, e);
-            return Response.ok().entity(e.getMessage()).build();
+            return new ArrayList<>();
         }
     }
 
@@ -89,17 +84,17 @@ public class UserHandler {
      * @param id of user
      * @return Response
      */
-    @GET
-    @Path("/{id}")
-    @Produces({MediaType.APPLICATION_JSON})
-    public Response getUser(@PathParam("id") Integer id) {
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
+    public
+    @ResponseBody
+    UserInfo getUser(@PathVariable("id") Integer id) {
         try {
             UserInfo user = userService.getUserById(id);
             logger.debug(user.toString());
-            return Response.ok().entity(user).build();
+            return user;
         } catch (DataAccessException | DataValidationException e) {
             logger.error(errorMessage, e);
-            return Response.ok().entity(e.getMessage()).build();
+            return new UserInfo();
         }
     }
 
@@ -108,19 +103,19 @@ public class UserHandler {
      * @param userInfo
      * @return Response
      */
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response addUser(UserInfo userInfo) {
+    @RequestMapping(method = RequestMethod.PUT)
+    public
+    @ResponseBody
+    Integer addUser(UserInfo userInfo) {
         try {
             // TODO
             // validators
             int userId = userService.addUser(userInfo);
             logger.debug(userId);
-            return Response.ok().entity(userId).build();
+            return userId;
         } catch (DataAccessException | DataValidationException e) {
             logger.error(errorMessage, e);
-            return Response.ok().entity(e.getMessage()).build();
+            return 0;
         }
     }
 
@@ -130,20 +125,19 @@ public class UserHandler {
      * @param userInfo
      * @return Response
      */
-    @POST
-    @Path("/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response updateEmployeeById(@PathParam("id") Integer id, UserInfo userInfo) {
+    @RequestMapping(method = RequestMethod.POST, value = "/{id}")
+    public
+    @ResponseBody
+    Integer updateEmployeeById(@PathVariable("id") Integer id, UserInfo userInfo) {
         try {
             // TODO
             // validators
             int userId = userService.updateUser(userInfo);
             logger.debug(userId);
-            return Response.ok().entity(userId).build();
+            return userId;
         } catch (DataAccessException | DataValidationException e) {
             logger.error(errorMessage, e);
-            return Response.ok().entity(e.getMessage()).build();
+            return 0;
         }
     }
 
@@ -152,19 +146,19 @@ public class UserHandler {
      * @param id of user
      * @return Response
      */
-    @DELETE
-    @Path("/{id}")
-    @Produces({MediaType.APPLICATION_JSON})
-    public Response deleteUser(@PathParam("id") Integer id) {
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+    public
+    @ResponseBody
+    Integer deleteUser(@PathVariable("id") Integer id) {
         try {
             // TODO
             // validators
             Integer userId = userService.deleteUser(id);
             logger.debug(userId);
-            return Response.ok().entity(userId).build();
+            return userId;
         } catch (DataAccessException | DataValidationException e) {
             logger.error(errorMessage, e);
-            return Response.ok().entity(e.getMessage()).build();
+            return 0;
         }
     }
 }

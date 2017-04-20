@@ -27,7 +27,7 @@ public class ServiceConnectionInfo {
     /**
      * REST full path.
      */
-    private static final String restfull = "/book-rest/rest/";
+    private static final String restfull = "/book-rest/";
 
     /**
      * Get service address.

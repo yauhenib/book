@@ -53,13 +53,5 @@ public class UserServiceTest {
     @Test
     public void testUserService() throws DataAccessException, DataValidationException {
 
-        IPersistency userPersistency = new MockPersistency();
-        IUserService userService = new UserService(userPersistency);
-        UserInfo userInfo = new UserInfo(1);
-        userInfo.setName("1");
-        userInfo.setPassword("1");
-        assertEquals(Integer.valueOf(1), userService.addUser(userInfo));
-        assertEquals(1, userService.getUserById(1).getId());
-        assertEquals(Integer.valueOf(1), userService.deleteUser(1));
     }
 }

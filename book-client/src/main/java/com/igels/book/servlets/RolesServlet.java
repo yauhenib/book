@@ -114,15 +114,7 @@ public class RolesServlet extends HttpServlet {
      * @throws IOException
      */
     private void showRoles(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ClientResponse clientResponse = restFullClient.sendMessage(RequestType.GET, Optional.empty());
 
-        GenericType<List<RoleInfo>> rolesListType = new GenericType<List<RoleInfo>>() {
-        };
-        List<RoleInfo> rolesList = clientResponse.getEntity(rolesListType);
-        req.setAttribute(RequestEntity.Roles.getValue(), rolesList);
-
-        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(roles + RolePagesName.Roles.getValue());
-        requestDispatcher.forward(req, resp);
     }
 
     /**
@@ -135,13 +127,7 @@ public class RolesServlet extends HttpServlet {
      * @throws IOException
      */
     private void showRole(int roleId, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ClientResponse clientResponse = restFullClient.sendMessage(RequestType.GET, Optional.of(new RoleInfo(roleId)));
 
-        RoleInfo roleInfo = clientResponse.getEntity(RoleInfo.class);
-        req.setAttribute(RequestEntity.Role.getValue(), roleInfo);
-
-        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(roles + RolePagesName.Role.getValue());
-        requestDispatcher.forward(req, resp);
     }
 
     /**
@@ -169,13 +155,7 @@ public class RolesServlet extends HttpServlet {
     private void deleteRole(int roleId, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logger.debug("Delete role with id " + roleId);
 
-        ClientResponse clientResponse = restFullClient.sendMessage(RequestType.DELETE, Optional.of(new RoleInfo(roleId)));
 
-        Integer removedRoleId = clientResponse.getEntity(Integer.class);
-        req.setAttribute(RequestEntity.Role.getValue(), new RoleInfo(removedRoleId));
-
-        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(roles + RolePagesName.DeleteRole.getValue());
-        requestDispatcher.forward(req, resp);
     }
 
     /**
@@ -189,14 +169,6 @@ public class RolesServlet extends HttpServlet {
     private void addRolePut(RoleInfo roleInfo, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logger.debug("Add role " + roleInfo.toString());
 
-        ClientResponse clientResponse = restFullClient.sendMessage(RequestType.PUT, Optional.of(roleInfo));
-        Integer result = clientResponse.getEntity(Integer.class);
-
-        roleInfo.setId(result);
-        req.setAttribute(RequestEntity.Role.getValue(), roleInfo);
-
-        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(roles + RolePagesName.AddRole.getValue());
-        requestDispatcher.forward(req, resp);
     }
 
     /**
@@ -210,13 +182,6 @@ public class RolesServlet extends HttpServlet {
     private void editRole(int roleId, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logger.debug("Edit role with id " + roleId);
 
-        ClientResponse clientResponse = restFullClient.sendMessage(RequestType.GET, Optional.of(new RoleInfo(roleId)));
-
-        RoleInfo roleInfo = clientResponse.getEntity(RoleInfo.class);
-        req.setAttribute(RequestEntity.Role.getValue(), roleInfo);
-
-        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(roles + RolePagesName.EditRole.getValue());
-        requestDispatcher.forward(req, resp);
     }
 
     /**
@@ -230,14 +195,6 @@ public class RolesServlet extends HttpServlet {
     private void editRolePost(RoleInfo roleInfo, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logger.debug("Edit role " + roleInfo.toString());
 
-        ClientResponse clientResponse = restFullClient.sendMessage(RequestType.POST, Optional.of(roleInfo));
-        Integer result = clientResponse.getEntity(Integer.class);
 
-        roleInfo.setId(result);
-        roleInfo.setName("");
-        req.setAttribute(RequestEntity.Role.getValue(), roleInfo);
-
-        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(roles + RolePagesName.EditRole.getValue());
-        requestDispatcher.forward(req, resp);
     }
 }

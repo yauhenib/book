@@ -1,30 +1,28 @@
 package com.igels.book;
 
-import java.net.ConnectException;
-import java.util.List;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import com.igels.book.exceptions.DataAccessException;
 import com.igels.book.exceptions.DataValidationException;
 import com.igels.book.persistency.RolePersistency;
 import com.igels.book.role.RoleInfo;
 import com.igels.book.service.roles.IRoleService;
 import com.igels.book.service.roles.RoleService;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.apache.log4j.Logger;
+
+import java.net.ConnectException;
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Role handler class
  */
-@Path("/roles")
+@Controller
+@RequestMapping("/roles")
 public class RoleHandler<T> {
 
     /**
@@ -65,16 +63,17 @@ public class RoleHandler<T> {
      * Get REST request handler
      * @return Response
      */
-    @GET
-    @Produces({MediaType.APPLICATION_JSON})
-    public Response get() {
+    @RequestMapping(method = RequestMethod.GET, value="/")
+    public
+    @ResponseBody
+    List<RoleInfo> get() {
         try {
             List<RoleInfo> roles = roleService.enumerateRoles();
             logger.debug(roles.toString());
-            return Response.ok().entity(roles).build();
+            return roles;
         } catch (DataAccessException e) {
             logger.error(errorMessage, e);
-            return Response.ok().entity(e.getMessage()).build();
+            return new ArrayList<>();
         }
     }
 
@@ -83,17 +82,17 @@ public class RoleHandler<T> {
      * @param id of roles
      * @return Response
      */
-    @GET
-    @Path("/{id}")
-    @Produces({MediaType.APPLICATION_JSON})
-    public Response getRole(@PathParam("id") Integer id) {
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
+    public
+    @ResponseBody
+    RoleInfo getRole(@PathVariable("id") Integer id) {
         try {
             RoleInfo role = roleService.getRoleById(id);
             logger.debug(role.toString());
-            return Response.ok().entity(role).build();
+            return role;
         } catch (DataAccessException | DataValidationException e) {
             logger.error(errorMessage, e);
-            return Response.ok().entity(e.getMessage()).build();
+            return new RoleInfo();
         }
     }
 
@@ -102,19 +101,19 @@ public class RoleHandler<T> {
      * @param roleInfo
      * @return Response
      */
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response addRole(RoleInfo roleInfo) {
+    @RequestMapping(method = RequestMethod.PUT, value = "/")
+    public
+    @ResponseBody
+    Integer addRole(RoleInfo roleInfo) {
         try {
             // TODO
             // validators
             int roleId = roleService.addRole(roleInfo);
             logger.debug(roleId);
-            return Response.ok().entity(roleId).build();
+            return roleId;
         } catch (DataAccessException | DataValidationException e) {
             logger.error(errorMessage, e);
-            return Response.ok().entity(e.getMessage()).build();
+            return 0;
         }
     }
 
@@ -124,20 +123,19 @@ public class RoleHandler<T> {
      * @param roleInfo
      * @return Response
      */
-    @POST
-    @Path("/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response updateRoleById(@PathParam("id") Integer id, RoleInfo roleInfo) {
+    @RequestMapping(method = RequestMethod.POST, value = "/{id}")
+    public
+    @ResponseBody
+    Integer updateRoleById(@PathVariable("id") Integer id, RoleInfo roleInfo) {
         try {
             // TODO
             // validators
             int roleId = roleService.updateRole(roleInfo);
             logger.debug(roleId);
-            return Response.ok().entity(roleId).build();
+            return roleId;
         } catch (DataAccessException | DataValidationException e) {
             logger.error(errorMessage, e);
-            return Response.ok().entity(e.getMessage()).build();
+            return 0;
         }
     }
 
@@ -146,19 +144,19 @@ public class RoleHandler<T> {
      * @param id of role
      * @return Response
      */
-    @DELETE
-    @Path("/{id}")
-    @Produces({MediaType.APPLICATION_JSON})
-    public Response deleteRole(@PathParam("id") Integer id) {
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+    public
+    @ResponseBody
+    Integer deleteRole(@PathVariable("id") Integer id) {
         try {
             // TODO
             // validators
             Integer roleId = roleService.deleteRole(id);
             logger.debug(roleId);
-            return Response.ok().entity(roleId).build();
+            return roleId;
         } catch (DataAccessException | DataValidationException e) {
             logger.error(errorMessage, e);
-            return Response.ok().entity(e.getMessage()).build();
+            return 0;
         }
     }
 }

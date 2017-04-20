@@ -11,10 +11,10 @@ public class ServiceConnectionInfoTest {
 
     @Test
     public void testConnectionString() {
-        assertEquals(URI.create("http://localhost:8080/book-rest/rest/" + RequestEntity.User.getValue()),
+        assertEquals(URI.create("http://localhost:8080/book-rest/" + RequestEntity.User.getValue()),
                 ServiceConnectionInfo.getAddress(RequestEntity.User));
 
-        assertEquals(URI.create("http://localhost:8080/book-rest/rest/" + RequestEntity.Users.getValue()),
+        assertEquals(URI.create("http://localhost:8080/book-rest/" + RequestEntity.Users.getValue()),
                 ServiceConnectionInfo.getAddress(RequestEntity.Users));
     }
 }

@@ -77,7 +77,15 @@ $(document).ready
             <table>
                 <tr>
                     <td><i>RoleId:</i></td>
-                    <td><input name="role_id" title=""/></td>
+                    <td>
+                    <a>
+                        <select name='role_id'>
+                            <c:forEach var="role" items="${roles}">
+                                <option value="${role.id}">${role.name}</option>
+                            </c:forEach>
+                        </select>
+                     </a>
+                    </td>
                 </tr>
                 <tr>
                     <td><i>Name:</i></td>

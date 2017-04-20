@@ -219,6 +219,13 @@ public final class UsersServlet extends HttpServlet {
      * @throws IOException
      */
     private void addUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        ClientResponse rolesClientResponse = rolesRestFullClient.sendMessage(RequestType.GET, Optional.empty());
+        GenericType<List<RoleInfo>> rolesListType = new GenericType<List<RoleInfo>>() {
+        };
+        List<RoleInfo> rolesList = rolesClientResponse.getEntity(rolesListType);
+        req.setAttribute(RequestEntity.Roles.getValue(), rolesList);
+
         RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(users + UserPagesName.AddUser.getValue());
         requestDispatcher.forward(req, resp);
     }

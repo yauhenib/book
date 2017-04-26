@@ -4,7 +4,7 @@ import com.igels.book.common.Entity;
 
 public class RoleInfo extends Entity {
 
-    private Integer Id;
+    private int Id;
     private String Name;
 
     /**
@@ -25,7 +25,7 @@ public class RoleInfo extends Entity {
      *
      * @return int
      */
-    public Integer getId() {
+    public int getId() {
         return Id;
     }
 

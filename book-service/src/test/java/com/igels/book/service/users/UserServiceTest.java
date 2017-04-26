@@ -59,7 +59,7 @@ public class UserServiceTest {
         userInfo.setName("1");
         userInfo.setPassword("1");
         assertEquals(Integer.valueOf(1), userService.addUser(userInfo));
-        assertEquals(Integer.valueOf(1), userService.getUserById(1).getId());
+        assertEquals(1, userService.getUserById(1).getId());
         assertEquals(Integer.valueOf(1), userService.deleteUser(1));
     }
 }

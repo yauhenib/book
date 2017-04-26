@@ -8,14 +8,14 @@ public class Entity {
     /**
      * Id, in any entity
      */
-    private final Integer Id = 0;
+    private final int Id = 0;
 
     /**
      * Get id.
      *
      * @return Integer
      */
-    public Integer getId() {
+    public int getId() {
         return Id;
     }
 }
